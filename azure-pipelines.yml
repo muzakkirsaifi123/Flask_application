@@ -28,40 +28,8 @@ stages:
       demands:
         - agent.name -equals ${{parameters.AgentName}}    
     steps: 
-    - task: Docker@0
+    - task: Docker@2
       inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Free Trial(b8875724-7a20-4181-bf3f-fff869f0a0a2)'
-        azureContainerRegistry: '{"loginServer":"demoacr077.azurecr.io", "id" : "/subscriptions/b8875724-7a20-4181-bf3f-fff869f0a0a2/resourceGroups/demo-acr/providers/Microsoft.ContainerRegistry/registries/demoacr077"}'
-        action: 'Build an image'
-        dockerFile: '**/Dockerfile'
-        imageName: '$(Build.Repository.Name):$(Build.BuildId)'
-    # - task: Docker@2
-    #   displayName: Build ans image 
-    #   inputs:
-    #     containerRegistry: 'container-registory'
-    #     # repository: 'demoacr077'
-    #     command: 'build'
-    #     repository: 'demoacr077:$(Build.BuildId)'
-    #     Dockerfile: '**/Dockerfile'
-    #     buildContext: '.'
-    # - task: Docker@2
-    #   displayName: Build docker image
-    #   inputs:
-    #     command: 'build'
-    #     Dockerfile: '**/Dockerfile'
-    #     imageName: '$(imageName)'
-    # - task: Docker@0
-    #   displayName: Push the docker image
-    #   inputs:
-    #     containerRegistry: 'container-registory'
-    #     repository: 'demoacr077:$(Build.BuildId)'
-    #     command: 'push'
-    #     # imageName: '$(imageName)'
-    - task: Docker@0
-      inputs:
-        containerregistrytype: 'Azure Container Registry'
-        azureSubscription: 'Free Trial(b8875724-7a20-4181-bf3f-fff869f0a0a2)'
-        azureContainerRegistry: '{"loginServer":"demoacr077.azurecr.io", "id" : "/subscriptions/b8875724-7a20-4181-bf3f-fff869f0a0a2/resourceGroups/demo-acr/providers/Microsoft.ContainerRegistry/registries/demoacr077"}'
-        action: 'Push an image'
-        imageName: '$(Build.Repository.Name):$(Build.BuildId)'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+
