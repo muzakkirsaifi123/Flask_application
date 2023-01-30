@@ -23,5 +23,7 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         imageName: '$(imageName)'
+        
+    
     
 
