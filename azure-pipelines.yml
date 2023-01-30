@@ -13,7 +13,7 @@ resources:
 - repo: self
 
 variables:
- ImageName: '$(Build.Repository.Name):$(Build.SourceBranchName)'
+ ImageName: '$(Build.SourceBranchName)'
 
 stages:
 - stage: Build
@@ -31,6 +31,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'container-registory'
-        repository: 'demoacr077:$(ImageName)'
+        repository: 'demoacr077/$(ImageName)'
+        tags: $(appBuildNumber)
         command: 'build'
         Dockerfile: '**/Dockerfile'
