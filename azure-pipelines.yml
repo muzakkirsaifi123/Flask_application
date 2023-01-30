@@ -2,12 +2,12 @@ name: Build and deploy a flask application
 trigger:
 - master
 
-# parameters:
-# - name: AgentName
-#   displayName: Agent
-#   type: string
-#   values:
-#   - test-vm
+parameters:
+- name: AgentName
+  displayName: Agent
+  type: string
+  values:
+  - test-vm
 
 resources:
 - repo: self
