@@ -1,0 +1,21 @@
+name: Build and deploy a flaskj application
+trigger:
+ - master
+
+resources:
+- repo: self
+
+variables:
+ imageName: 'image-$(Build.Repository.Name):$(Build.SourceBranchName)-$(Buils.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build Image And Deploy
+  jobs:
+  - job: Build
+    displayName: Build Job
+    pool: 
+      vmImage: ubuntu-latest
+    steps:
+    
+
