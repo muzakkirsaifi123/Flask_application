@@ -1,6 +1,7 @@
 name: Build and deploy a flask application
 trigger:
 - master
+
 parameters:
 - name: AgentName
   displayName: Agent
