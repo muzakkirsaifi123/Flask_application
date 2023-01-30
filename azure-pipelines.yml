@@ -16,6 +16,10 @@ stages:
     displayName: Build Job
     pool: 
       vmImage: ubuntu-latest
-    steps:
+    steps: 
+    - task: Docker@2
+      inputs:
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
     
 
