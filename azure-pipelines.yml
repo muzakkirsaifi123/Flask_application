@@ -21,12 +21,12 @@ stages:
   jobs:
   - job: Build
     displayName: Build Job
-    pool: 
-      vmImage: ubuntu-latest
-    # pool:
-    #   name: Default
-    #   demands:
-    #     - agent.name -equals ${{parameters.AgentName}}    
+    # pool: 
+    #   vmImage: ubuntu-latest
+    pool:
+      name: Default
+      demands:
+        - agent.name -equals ${{parameters.AgentName}}    
     steps: 
     - task: Docker@0
       inputs:
