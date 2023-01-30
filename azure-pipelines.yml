@@ -24,7 +24,7 @@ stages:
     # pool: 
     #   vmImage: ubuntu-latest
     pool:
-      name: BUZ-MYB
+      name: Default
       demands:
         - agent.name -equals ${{parameters.AgentName}}    
     steps: 
