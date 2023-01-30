@@ -1,6 +1,12 @@
 name: Build and deploy a flask application
 trigger:
- - master
+- master
+parameters:
+- name: AgentName
+  displayName: Agent
+  type: string
+  values:
+  - test-vm
 
 resources:
 - repo: self
@@ -14,10 +20,15 @@ stages:
   jobs:
   - job: Build
     displayName: Build Job
-    pool: 
-      vmImage: ubuntu-latest
+    # pool: 
+    #   vmImage: ubuntu-latest
+    pool:
+      name: BUZ-MYB
+      demands:
+        - agent.name -equals ${{parameters.AgentName}}    
     steps: 
     - task: Docker@2
+      displayName: Build ans image 
       inputs:
         containerRegistry: 'container-registory'
         repository: 'demoacr077'
