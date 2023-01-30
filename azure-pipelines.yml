@@ -2,12 +2,12 @@ name: Build and deploy a flask application
 trigger:
 - master
 
-parameters:
-- name: AgentName
-  displayName: Agent
-  type: string
-  values:
-  - test-vm
+# parameters:
+# - name: AgentName
+#   displayName: Agent
+#   type: string
+#   values:
+#   - test-vm
 
 resources:
 - repo: self
@@ -15,66 +15,53 @@ resources:
 variables:
  ImageName: '$(Build.Repository.Name):$(Build.SourceBranchName)'
 
-# stages:
-# - stage: Build
-#   displayName: Build Image And Deploy
-#   jobs:
-#   - job: Build
-#     displayName: Build Job
-#     # pool: 
-#     #   vmImage: ubuntu-latest
-#     pool:
-#       name: Default
-#       demands:
-#         - agent.name -equals ${{parameters.AgentName}}    
-#     steps: 
-#     - task: Docker@2
-#       displayName: Build ans image 
-#       inputs:
-#         containerRegistry: 'container-registory'
-#         # repository: 'demoacr077'
-#         command: 'build'
-#         # repository: '$(imageName)'
-#         imageName: '$(ImageName):$(Build.BuildId)'
-#         Dockerfile: '**/Dockerfile'
-#         includeLatestTag: true
-#         buildContext: '.'
-#     # - task: Docker@2
-#     #   displayName: Build docker image
-#     #   inputs:
-#     #     command: 'build'
-#     #     Dockerfile: '**/Dockerfile'
-#     #     imageName: '$(imageName)'
-#     - task: Docker@2
-#       displayName: Push the docker image
-#       inputs:
-#         containerRegistry: 'container-registory'
-#         repository: '$(imageName)'
-#         command: 'push'
-#         # imageName: '$(imageName)'
-    
-    
-
 stages:
 - stage: Build
-  displayName: Build image
-  jobs:  
-  - job: DockerImage
-    displayName: Build and push Docker image
-    pool:
-      name: Default
-      demands:
-        - agent.name -equals ${{parameters.AgentName}}   
-    steps:
-    - task: Docker@1
-      displayName: 'Build the Docker image'
+  displayName: Build Image And Deploy
+  jobs:
+  - job: Build
+    displayName: Build Job
+    pool: 
+      vmImage: ubuntu-latest
+    # pool:
+    #   name: Default
+    #   demands:
+    #     - agent.name -equals ${{parameters.AgentName}}    
+    steps: 
+    - task: Docker@0
       inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Build an image'
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Free Trial(b8875724-7a20-4181-bf3f-fff869f0a0a2)'
+        azureContainerRegistry: '{"loginServer":"demoacr077.azurecr.io", "id" : "/subscriptions/b8875724-7a20-4181-bf3f-fff869f0a0a2/resourceGroups/demo-acr/providers/Microsoft.ContainerRegistry/registries/demoacr077"}'
+        action: 'Build an image'
         dockerFile: '**/Dockerfile'
-        imageName: '$(ImageName)'
-        includeLatestTag: true
-        useDefaultContext: false
-        buildContext: '.'
-        
+        imageName: '$(Build.Repository.Name):$(Build.BuildId)'
+    # - task: Docker@2
+    #   displayName: Build ans image 
+    #   inputs:
+    #     containerRegistry: 'container-registory'
+    #     # repository: 'demoacr077'
+    #     command: 'build'
+    #     repository: 'demoacr077:$(Build.BuildId)'
+    #     Dockerfile: '**/Dockerfile'
+    #     buildContext: '.'
+    # - task: Docker@2
+    #   displayName: Build docker image
+    #   inputs:
+    #     command: 'build'
+    #     Dockerfile: '**/Dockerfile'
+    #     imageName: '$(imageName)'
+    # - task: Docker@0
+    #   displayName: Push the docker image
+    #   inputs:
+    #     containerRegistry: 'container-registory'
+    #     repository: 'demoacr077:$(Build.BuildId)'
+    #     command: 'push'
+    #     # imageName: '$(imageName)'
+    - task: Docker@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Free Trial(b8875724-7a20-4181-bf3f-fff869f0a0a2)'
+        azureContainerRegistry: '{"loginServer":"demoacr077.azurecr.io", "id" : "/subscriptions/b8875724-7a20-4181-bf3f-fff869f0a0a2/resourceGroups/demo-acr/providers/Microsoft.ContainerRegistry/registries/demoacr077"}'
+        action: 'Push an image'
+        imageName: '$(Build.Repository.Name):$(Build.BuildId)'
