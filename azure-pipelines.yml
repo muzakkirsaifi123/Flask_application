@@ -31,7 +31,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'container-registory'
-        # repository: 'demoacr077'
+        repository: 'demoacr077'
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(ImageName)'
