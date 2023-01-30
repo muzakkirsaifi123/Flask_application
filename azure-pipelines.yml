@@ -61,6 +61,10 @@ stages:
   jobs:  
   - job: DockerImage
     displayName: Build and push Docker image
+    pool:
+      name: Default
+      demands:
+        - agent.name -equals ${{parameters.AgentName}}   
     steps:
     - task: Docker@1
       displayName: 'Build the Docker image'
