@@ -32,8 +32,9 @@ stages:
       displayName: Build ans image 
       inputs:
         containerRegistry: 'container-registory'
-        repository: 'demoacr077'
+        # repository: 'demoacr077'
         command: 'build'
+        repository: '$(imageName)'
         Dockerfile: '**/Dockerfile'
     # - task: Docker@2
     #   displayName: Build docker image
@@ -45,7 +46,7 @@ stages:
       displayName: Push the docker image
       inputs:
         containerRegistry: 'container-registory'
-        repository: 'demoacr077'
+        repository: '$(imageName)'
         command: 'push'
         # imageName: '$(imageName)'
     
