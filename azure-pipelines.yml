@@ -13,42 +13,64 @@ resources:
 - repo: self
 
 variables:
- imageName: '$(Build.Repository.Name):$(Build.SourceBranchName)'
+ ImageName: '$(Build.Repository.Name):$(Build.SourceBranchName)'
+
+# stages:
+# - stage: Build
+#   displayName: Build Image And Deploy
+#   jobs:
+#   - job: Build
+#     displayName: Build Job
+#     # pool: 
+#     #   vmImage: ubuntu-latest
+#     pool:
+#       name: Default
+#       demands:
+#         - agent.name -equals ${{parameters.AgentName}}    
+#     steps: 
+#     - task: Docker@2
+#       displayName: Build ans image 
+#       inputs:
+#         containerRegistry: 'container-registory'
+#         # repository: 'demoacr077'
+#         command: 'build'
+#         # repository: '$(imageName)'
+#         imageName: '$(ImageName):$(Build.BuildId)'
+#         Dockerfile: '**/Dockerfile'
+#         includeLatestTag: true
+#         buildContext: '.'
+#     # - task: Docker@2
+#     #   displayName: Build docker image
+#     #   inputs:
+#     #     command: 'build'
+#     #     Dockerfile: '**/Dockerfile'
+#     #     imageName: '$(imageName)'
+#     - task: Docker@2
+#       displayName: Push the docker image
+#       inputs:
+#         containerRegistry: 'container-registory'
+#         repository: '$(imageName)'
+#         command: 'push'
+#         # imageName: '$(imageName)'
+    
+    
 
 stages:
 - stage: Build
-  displayName: Build Image And Deploy
-  jobs:
-  - job: Build
-    displayName: Build Job
-    # pool: 
-    #   vmImage: ubuntu-latest
-    pool:
-      name: Default
-      demands:
-        - agent.name -equals ${{parameters.AgentName}}    
-    steps: 
-    - task: Docker@2
-      displayName: Build ans image 
+  displayName: Build image
+  jobs:  
+  - job: DockerImage
+    displayName: Build and push Docker image
+    steps:
+    - task: Docker@1
+      displayName: 'Build the Docker image'
       inputs:
-        containerRegistry: 'container-registory'
-        # repository: 'demoacr077'
-        command: 'build'
-        repository: '$(imageName)'
-        Dockerfile: '**/Dockerfile'
-    # - task: Docker@2
-    #   displayName: Build docker image
-    #   inputs:
-    #     command: 'build'
-    #     Dockerfile: '**/Dockerfile'
-    #     imageName: '$(imageName)'
-    - task: Docker@2
-      displayName: Push the docker image
-      inputs:
-        containerRegistry: 'container-registory'
-        repository: '$(imageName)'
-        command: 'push'
-        # imageName: '$(imageName)'
-    
-    
-
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Build an image'
+        dockerFile: '**/Dockerfile'
+        imageName: '$(ImageName)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: '.'
+        
