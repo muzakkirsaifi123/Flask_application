@@ -23,6 +23,10 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         imageName: '$(imageName)'
+    - task: Docker@2
+      inputs:
+        command: 'push'
+        tags: '$(imageName)'
         
     
     
