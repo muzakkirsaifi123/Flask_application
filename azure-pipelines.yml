@@ -13,7 +13,7 @@ resources:
 - repo: self
 
 variables:
- imageName: 'image-$(Build.Repository.Name):$(Build.SourceBranchName)-$(Buils.BuildId)'
+ imageName: '$(Build.Repository.Name):$(Build.SourceBranchName)'
 
 stages:
 - stage: Build
