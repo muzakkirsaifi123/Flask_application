@@ -25,9 +25,10 @@ stages:
         imageName: '$(imageName)'
     - task: Docker@2
       inputs:
+        containerRegistry: 'container-registory'
+        repository: 'demoacr077'
         command: 'push'
-        tags: '$(imageName)'
-        
+        imageName: '$(imageName)'
     
     
 
