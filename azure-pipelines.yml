@@ -40,7 +40,7 @@ stages:
       displayName: Push docker image
       inputs:
         containerRegistry: 'container-registry'
-        repository: 'demoacr077'
+        repository: 'demoacr077/$(ImageName)'
         command: 'push'
         
     # - task: Docker@2
