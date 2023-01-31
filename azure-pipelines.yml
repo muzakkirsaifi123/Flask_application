@@ -42,8 +42,11 @@ stages:
         repository: 'demoacr077/$(ImageName)'
         command: 'push'
     
-    - task: AzureWebApp@1
-        
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'Free Trial(1)(b8875724-7a20-4181-bf3f-fff869f0a0a2)'
+        appName: 'muz12'
+        containers: 'demoacr077/$(ImageName)'        
     # - task: Docker@2
     #   displayName: Push docker image
     #   inputs:
