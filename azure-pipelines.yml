@@ -36,12 +36,12 @@ stages:
         # tags: $(appBuildNumber)
         command: 'build'
         Dockerfile: '**/Dockerfile'
-    - task: Docker@2
-      displayName: Push docker image
-      inputs:
-        containerRegistry: 'registry'
-        repository: 'demoacr077/$(ImageName)'
-        command: 'push'
+    # - task: Docker@2
+    #   displayName: Push docker image
+    #   inputs:
+    #     containerRegistry: 'registry'
+    #     repository: 'demoacr077/$(ImageName)'
+    #     command: 'push'
         
     # - task: Docker@2
     #   displayName: Push docker image
