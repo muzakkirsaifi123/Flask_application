@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Install NPM modules
-        run: |
-          npm install
+      # - uses: actions/checkout@v3
+      # - name: Install NPM modules
+      #   run: |
+      #     npm install
 
       - name: Install Trivy and Scan
         run: |
